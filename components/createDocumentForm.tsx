@@ -19,61 +19,111 @@ import { Input } from "@/components/ui/input"
 import { createDocument } from '@/convex/documents'
 import { useMutation } from 'convex/react'
 import { api } from '@/convex/_generated/api'
+import { LoadingButton } from './loading-button'
+import { Id } from '@/convex/_generated/dataModel'
 
 const formSchema = z.object({
-    title: z.string().min(2).max(250),
+  title: z.string().min(2).max(250),
+  file: z.instanceof(File)
 })
 
 const CreateDocumentForm = ({
-    onUpload,
+  onUpload,
 }: {
-    onUpload: () => void
+  onUpload: () => void
 }) => {
-    const createDocument = useMutation(api.documents.createDocument);
-    // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            title: "",
-        },
+  const createDocument = useMutation(api.documents.createDocument);
+  const generateUploadUrl = useMutation(api.documents.generateUploadUrl);
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+    },
+  })
+
+  // 2. Define a submit handler.
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+
+    //a wait for 10 secomd 
+
+
+    console.log(values)
+    const uploadUrl = await generateUploadUrl()
+    console.log(uploadUrl)
+    const result = await fetch(uploadUrl, {
+      method: "POST",
+      headers: { "Content-Type": values.file.type },
+      body: values.file,
+    });
+
+    const {storageId} = await result.json()
+    await createDocument({
+      title: values.title,
+      fileId:storageId as Id<'_storage'>
     })
+    onUpload()
+  }
+  return (
+    <div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Document Name </FormLabel>
+                <FormControl>
+                  <Input placeholder="shadcn" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is your public display name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-    // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
-       createDocument({
-            title: values.title
-        })  
-        onUpload()
-    }
-    return (
-        <div>
- <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+          <FormField
+            control={form.control}
+            name="file"
+            render={({ field : {value,onChange, ...fieldProps} }) => (
+              <FormItem>
+                <FormLabel>File </FormLabel>
+                <FormControl>
+                  <Input 
+                  
+                  type='file'
+                  accept='.xml,.doc,.txt' 
+                  {...fieldProps} 
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    onChange(file);
+                  } }
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your public display name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        </div>
-    )
+          <LoadingButton
+            isLoading={form.formState.isSubmitting}
+            loadingText="Uploading..."
+          >
+            Upload
+          </LoadingButton>
+        </form>
+      </Form>
+
+    </div>
+  )
 }
 
 export default CreateDocumentForm

@@ -8,6 +8,8 @@ import {
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
+import { Button } from './ui/button'
+import Link from 'next/link'
   
 const DocumentCard = ({document}: {
     document:  Doc <'documents'>
@@ -23,8 +25,10 @@ const DocumentCard = ({document}: {
     <p>Card Content</p>
   </CardContent>
   <CardFooter>
-    <p>Card Footer</p>
-  </CardFooter>
+    <Button asChild >
+      <Link href={`/documents/${document._id}`}> View</Link>
+    </Button>
+ </CardFooter>
 </Card>
 
   )
