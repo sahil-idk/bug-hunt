@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./providers";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
+import Providers from "@/utils/Providers";
 import { ThemeProvider } from "@/components/theme-provider";
-
+import { ClerkProviders } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
+        <ClerkProviders>
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -29,9 +30,11 @@ export default function RootLayout({
           >
           {/* <Navbar /> */}
           {/* <NavigationMenuDemo/> */}
+          <Providers>
           {children}
+          </Providers>
        </ThemeProvider>
-        </Providers>
+        </ClerkProviders>
       </body>
     </html>
   );
