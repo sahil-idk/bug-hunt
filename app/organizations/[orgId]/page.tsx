@@ -39,9 +39,9 @@ const OrganizationPage = ({
     return (
         <div>
 
-            <h1 className='text-white font-bold text-5xl'>{organisationQuery?.orgName}</h1>
+            <h1 className='font-bold text-5xl'>{organisationQuery?.orgName}</h1>
             <p>{organisationQuery?.orgDescription}</p>
-            <div className='grid grid-cols-5'>
+            <div className=''>
             
                 <OrgDashboard orgGithub={organisationQuery?.orgGithub}/>
             </div>

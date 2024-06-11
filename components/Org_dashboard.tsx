@@ -7,7 +7,9 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-  } from "@/components/ui/card"
+} from "@/components/ui/card"
+import { Button } from './ui/button'
+import Link from 'next/link'
 type Props = {}
 
 const OrgDashboard = ({
@@ -17,13 +19,13 @@ const OrgDashboard = ({
 }) => {
 
 
-    const {data,isError,isLoading,error} = useQuery({
+    const { data, isError, isLoading, error } = useQuery({
 
-        queryKey: ['orgGithubDetails'],
-        queryFn:() => fetch(`https://api.github.com/orgs/${orgGithub}/repos?per_page=5`,{
-            headers:{
+        queryKey: ['orgGithubDetails', orgGithub],
+        queryFn: () => fetch(`https://api.github.com/orgs/${orgGithub}/repos?per_page=5`, {
+            headers: {
                 Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`
-            
+
             }
         }).then(response => response.json())
     })
@@ -31,45 +33,52 @@ const OrgDashboard = ({
 
     if (isLoading) {
         return <span>Loading repos...</span>;
-      }
-      if (isError) {
+    }
+    if (isError) {
         return <span>Error loading repos: {error.message}</span>;
-      }
-      if (!data || data.length === 0) {
+    }
+    if (!data || data.length === 0) {
         return <div>No repos available</div>;
-      }
-    
+    }
+
     console.log(data)
 
-  return (
-    <div>
-        {orgGithub}
+    return (
+        <div>
+         
+            <div className='grid  grid-cols-3'>
+                {
+                    data ? data.map((repo: any) => {
+                        return (
+                            <div key={repo.id} className='  '>
+                                <Card className='w-[350px]'>
+                                    <CardHeader>
+                                        <div className='flex flex-row justify-between items-center mb-5'>
+                                        <CardTitle className='text-xl text-orange-500'>{repo.name}</CardTitle>
+                                        <Link href={`/repos/${orgGithub}/${repo.name}`}>
+                                        <Button className='text-xs '>View Repo</Button>
+                                        </Link>
+                                        </div>
+                                        <CardDescription>{repo.description}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <p>Card Content</p>
+                                    </CardContent>
+                                    <CardFooter className='flex flex-row justify-between'>
+                                        <p>{repo.language}</p>
+                                        <p>Watchers: {repo.watchers}</p>
+                                    </CardFooter>
+                                </Card>
 
-            {
-                        data ? data.map((repo: any) => {
-                            return (
-                                <div key={repo.id} className=''>
-                                    <Card className='w-[350px]'>
-                                        <CardHeader>
-                                            <CardTitle>{repo.name}</CardTitle>
-                                            <CardDescription>{repo.description}</CardDescription>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <p>Card Content</p>
-                                        </CardContent>
-                                        <CardFooter>
-                                            <p>{repo.language}</p>
-                                        </CardFooter>
-                                    </Card>
 
-
-                                </div>
-                            )
-                        }) :
-                            <div>No data</div>
-                    }
-    </div>
-  )
+                            </div>
+                        )
+                    }) :
+                        <div>No data</div>
+                }
+            </div>
+        </div>
+    )
 }
 
 export default OrgDashboard
