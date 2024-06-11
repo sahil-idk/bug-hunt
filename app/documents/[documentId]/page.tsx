@@ -5,7 +5,7 @@ import { Id } from '@/convex/_generated/dataModel';
 import { useQuery } from 'convex/react';
 import React from 'react'
 
-const page = ({params} : {
+const DocumentPage = ({params} : {
     params: {
         documentId: Id<'documents'>
     }
@@ -37,4 +37,4 @@ const page = ({params} : {
   )
 }
 
-export default page
+export default DocumentPage

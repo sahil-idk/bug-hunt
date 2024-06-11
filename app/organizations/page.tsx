@@ -43,7 +43,7 @@ const Organizations = (props: Props) => {
                     
 
 
-                            <OrgTable orgId={org._id} orgName={org.orgName} orgGithub={org.orgGithub} orgDescription={org.orgDescription} />
+                            <OrgTable key={org._id} orgId={org._id} orgName={org.orgName} orgGithub={org.orgGithub} orgDescription={org.orgDescription} />
                         
                     ))
                 }
