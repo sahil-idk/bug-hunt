@@ -42,7 +42,7 @@ export default async function  IssueDescriptionPage(
       // HydrationBoundary is a Client Component, so hydration will happen there.
       <HydrationBoundary state={dehydrate(queryClient)}>
      
-        <IssueDescription />
+        <IssueDescription params={params} />
       </HydrationBoundary>
     )
   }
