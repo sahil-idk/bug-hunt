@@ -133,7 +133,7 @@ export function IssueDashboard({
                   <TableHead className="py-3 px-4 text-left">
                     Comments
                   </TableHead>
-                  <TableHead className="py-3 px-4 text-left">Actions</TableHead>
+                  <TableHead className="py-3 px-4 text-left">Description</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -141,7 +141,7 @@ export function IssueDashboard({
                   return (
                     <>
                     <TableRow className="border-b border-gray-200 dark:border-gray-700">
-                      <TableCell className="py-3 px-4 ">
+                      <TableCell className="py-3 px-4 max-w-sm ">
                         <Link className="font-medium hover:text-orange-500 " href={`https://github.com/${orgName}/${repoName}/issues/${issue.number}`}>
                           #{issue.number} - {issue.title}
                         </Link>
@@ -157,7 +157,7 @@ export function IssueDashboard({
                       <TableCell className="py-3 px-4">{formatDate(issue.updated_at)}</TableCell>
                       <TableCell className="py-3 px-4 text-center">{issue.comments}</TableCell>
                       <TableCell className="py-3 px-4 text-center">
-                        <Button >Add </Button>
+                        <Link href={`/repos/${orgName}/${repoName}/issues/${issue.number}`} className="hover:text-blue-500" >View</Link>
                       </TableCell>
 
                     </TableRow>
