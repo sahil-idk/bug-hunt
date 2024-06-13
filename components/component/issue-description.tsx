@@ -4,7 +4,17 @@ import { Badge } from "@/components/ui/badge"
 import { useQuery } from "@tanstack/react-query"
 import Image from "next/image"
 
-export function IssueDescription() {
+export function IssueDescription(
+  {
+    params
+  }: {
+    params: {
+      issueId: string;
+      repoName: string;
+      orgName: string;
+    }
+  }
+) {
   const { data } = useQuery({ queryKey: ['IssueDetails'],
     queryFn:() =>
     fetch(`https://api.github.com/repos/${params.orgName}/${params.repoName}/issues/${params.issueId}`,
