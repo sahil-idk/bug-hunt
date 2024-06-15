@@ -3,7 +3,29 @@
 import { Badge } from "@/components/ui/badge"
 import { useQuery } from "@tanstack/react-query"
 import Image from "next/image"
+import Markdown from 'markdown-to-jsx'
+import { Button } from "../ui/button"
+import Link from "next/link"
 
+interface label 
+  {
+
+    id: number,
+
+    node_id: string,
+
+    url: string,
+
+    name: string,
+
+    color: string,
+
+    default: false,
+
+    description: string,
+
+
+}
 export function IssueDescription(
   {
     params
@@ -44,18 +66,18 @@ export function IssueDescription(
               width={40}
             />
             <div>
-              <h1 className="text-xl font-semibold">{data.title}</h1>
+              <Link href={data.html_url}><h1 className="text-xl hover:text-orange-500 font-semibold">{data.title}</h1></Link>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 Opened by
                 <span className="font-medium">{data.user.login}</span> on <time dateTime="2023-06-12">{data.created_at}</time>
               </p>
             </div>
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400">#1{data.number}</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">#{data.number}</div>
         </div>
-        <div className="prose prose-gray dark:prose-invert">
-          <p>{data.body}</p>
-          <p>This will involve the following steps:</p>
+        <div className="">
+          <Markdown>{data.body}</Markdown>
+        
           {/* <ul>
             <li>Install the necessary TypeScript dependencies</li>
             <li>Configure the TypeScript compiler options</li>
@@ -67,58 +89,21 @@ export function IssueDescription(
       </div>
       <div className="w-64 ml-8 hidden md:block">
         <div className="space-y-4">
-          <div>
-            <h2 className="text-sm font-medium mb-2">Labels</h2>
-            <div className="flex flex-wrap gap-2">
-              <Badge>enhancement</Badge>
-              <Badge variant="secondary">bug</Badge>
-              <Badge variant="outline">documentation</Badge>
-            </div>
-          </div>
+         
           <div>
             <h2 className="text-sm font-medium mb-2">Assignees</h2>
-            <div className="flex space-x-2">
-              <img
-                alt="Avatar"
-                className="rounded-full"
-                height={32}
-                src="/placeholder.svg"
-                style={{
-                  aspectRatio: "32/32",
-                  objectFit: "cover",
-                }}
-                width={32}
-              />
-              <img
-                alt="Avatar"
-                className="rounded-full"
-                height={32}
-                src="/placeholder.svg"
-                style={{
-                  aspectRatio: "32/32",
-                  objectFit: "cover",
-                }}
-                width={32}
-              />
-              <img
-                alt="Avatar"
-                className="rounded-full"
-                height={32}
-                src="/placeholder.svg"
-                style={{
-                  aspectRatio: "32/32",
-                  objectFit: "cover",
-                }}
-                width={32}
-              />
             </div>
           </div>
           <div>
             <h2 className="text-sm font-medium mb-2">Milestone</h2>
             <Badge>v1.0.0</Badge>
           </div>
+
+          <div className="mt-10">
+            <Button>Add to workspace</Button>
+          </div>
         </div>
       </div>
-    </div>
+    
   )
 }

@@ -10,12 +10,14 @@ import { ModeToggle } from "./ModeToggle"
 export default function Navbar() {
   return (
     <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
-      <Link href="#" className="mr-6 hidden lg:flex" prefetch={false}>
-        <MountainIcon className="h-6 w-6" />
-        <span className="sr-only">Acme Inc</span>
+      <Link href="#" className="text-2xl mr-5" prefetch={false}>
+    
+             OpenCode
+           
       </Link>
       <NavigationMenu className="hidden lg:flex">
         <NavigationMenuList>
+       
           <NavigationMenuLink asChild>
             <Link
               href="/organizations"

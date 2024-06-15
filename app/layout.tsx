@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
@@ -7,6 +8,11 @@ import Providers from "@/utils/Providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProviders } from "./providers";
 const inter = Inter({ subsets: ["latin"] });
+
+const manrope = Manrope({ 
+  subsets: ["latin"],
+  weight: '700'
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={manrope.className}>
         <ClerkProviders>
         <ThemeProvider
             attribute="class"
