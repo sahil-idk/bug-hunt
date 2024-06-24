@@ -27,14 +27,14 @@ export default function Home() {
           fill="white"
         />
 
-        <div className=" p-4 max-w-7xl  mx-auto relative z-10  w-full pt-20 md:pt-0">
+        <div className="   md:max-w-7xl  md:mx-auto relative z-10  w-full md:px-6  md:pt-0">
           <Navbar />
 
-          <div className=" pt-32 md:text-7xl flex flex-col  justify-items-center items-center mx-auto font-bold text-center bg-clip-text text-transparent  bg-gradient-to-b from-white to-slate-500 bg-opacity-50">
+          <div className=" pt-32 mx-5  sm:mx-10 sm:text-5xl md:text-7xl flex flex-col  justify-items-center items-center md:mx-auto font-bold text-center bg-clip-text text-transparent  bg-gradient-to-b from-white to-slate-500 bg-opacity-50">
             <HoverBorderGradient
               containerClassName="rounded-full"
               as="button"
-              className="text-xs  dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+              className="text-[7px]   sm:text-xs  dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
             >
               <span>
                 why should competitive programmers have all the fun? building
@@ -42,9 +42,9 @@ export default function Home() {
               </span>
             </HoverBorderGradient>
 
-            <div className="max-w-[700px] pt-[16px] text-[60px]  ">
-              Codeforces for Open Source developers <br />{" "}
-              <p className="text-sm mx-auto pt-[16px] pb-[24px]  w-[400px]">
+            <div className="  sm:mx-0 sm:max-w-[500px] leading-tight md:leading-none md:max-w-[700px] pt-[16px] text-[32px] sm:text-[48px] md:text-[60px]  ">
+              <>Codeforces for Open Source developers</> <br />{" "}
+              <p className="text-[10px] w-[300px] sm:text-sm mx-auto pt-[16px] pb-[24px]  sm:w-[400px]">
                 the ultimate showdown for open-source devs! time to rank up,
                 track your issues, and show'em who's boss
               </p>
