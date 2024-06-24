@@ -37,7 +37,7 @@ export function IssueDescription(
     }
   }
 ) {
-  const { data } = useQuery({ queryKey: ['IssueDetails'],
+  const { data, isLoading, isError, error } = useQuery({ queryKey: ['IssueDetails'],
     queryFn:() =>
     fetch(`https://api.github.com/repos/${params.orgName}/${params.repoName}/issues/${params.issueId}`,
       {
@@ -47,7 +47,13 @@ export function IssueDescription(
       }
     ).then((response) => response.json()),
   })
-
+  if (isLoading) {
+    return <span>Loading Issue details </span>;
+  }
+  if (isError) {
+    return <span>Error loading issue: {error.message}</span>;
+  }
+  
   console.log(data);
   return (
     <div className="flex w-full max-w-5xl mx-auto py-8 px-4 md:px-6">

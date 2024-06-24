@@ -1,21 +1,26 @@
-'use client'
+import { useAuth } from '@clerk/clerk-react';
 import Link from "next/link"
 import { NavigationMenu, NavigationMenuList, NavigationMenuLink } from "@/components/ui/navigation-menu"
 import { Button } from "@/components/ui/button"
 import { JSX, SVGProps } from "react"
 import { ThemeProvider } from "./theme-provider"
-import AuthButton from "./AuthButton"
+import  { HeaderActions } from "./AuthButton"
 import { ModeToggle } from "./ModeToggle"
+import { get } from "http"
 
 export default function Navbar() {
+
+  const { getToken, isLoaded, isSignedIn } = useAuth();
   return (
     <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
-      <Link href="#" className="text-2xl mr-5" prefetch={false}>
+      <Link href="#" className="text-2xl  mr-5" prefetch={false}>
     
-             OpenCode
+           <h1 className='bg-gradient-to-br from-white  to-slate-400 inline-block text-transparent bg-clip-text'>opensource.build</h1>
            
       </Link>
-      <NavigationMenu className="hidden lg:flex">
+
+    
+     {isSignedIn && <NavigationMenu className="hidden lg:flex">
         <NavigationMenuList>
        
           <NavigationMenuLink asChild>
@@ -56,9 +61,9 @@ export default function Navbar() {
           </NavigationMenuLink>
         </NavigationMenuList>
       </NavigationMenu>
-      
-      <div className="ml-auto flex gap-6">
-        <AuthButton />
+      }
+      <div className="ml-auto flex gap-6 items-center">
+        <HeaderActions/>
         <ModeToggle/>
 
       </div>

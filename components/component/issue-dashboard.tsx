@@ -117,7 +117,7 @@ export function IssueDashboard({
             style={{
               maxHeight: "500px",
             }}
-          >
+         >
             <Table className="w-full border-collapse border-gray-200 dark:border-gray-700">
               <TableHeader>
                 <TableRow className="border-b border-gray-200 dark:border-gray-700">
